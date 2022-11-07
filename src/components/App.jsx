@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 import s from './App.module.css';
 
 import ContactForm from './ContactForm/ContactForm';
@@ -9,59 +9,60 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { nanoid } from 'nanoid';
 
 function App() {
-  const [contacts, setContacts] = useState(
-    JSON.parse(localStorage.getItem('contacts')) ?? []
-  );
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useState(
+  //   JSON.parse(localStorage.getItem('contacts')) ?? []
+  // );
+  // const [filter, setFilter] = useState('');
+  const contacts = useSelector(state => state.contacts, shallowEqual);
 
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  // useEffect(() => {
+  //   localStorage.setItem('contacts', JSON.stringify(contacts));
+  // }, [contacts]);
 
-  const onAddContact = ({ name, number }) => {
-    const normalizedName = name.toLowerCase();
+  // const onAddContact = ({ name, number }) => {
+  //   const normalizedName = name.toLowerCase();
 
-    if (
-      contacts.some(contact => contact.name.toLowerCase() === normalizedName)
-    ) {
-      Notify.failure(`${name} is already in contacts`);
-      return;
-    }
+  //   if (
+  //     contacts.some(contact => contact.name.toLowerCase() === normalizedName)
+  //   ) {
+  //     Notify.failure(`${name} is already in contacts`);
+  //     return;
+  //   }
 
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-    setContacts(prev => [...prev, contact]);
-  };
+  //   const contact = {
+  //     id: nanoid(),
+  //     name,
+  //     number,
+  //   };
+  //   setContacts(prev => [...prev, contact]);
+  // };
 
-  const handleDelete = id => {
-    setContacts(prevState => prevState.filter(contact => contact.id !== id));
-  };
+  // const handleDelete = id => {
+  //   setContacts(prevState => prevState.filter(contact => contact.id !== id));
+  // };
 
-  const handleFilter = e => {
-    setFilter(e.currentTarget.value.trim());
-  };
+  // const handleFilter = e => {
+  //   setFilter(e.currentTarget.value.trim());
+  // };
 
-  const filteredContacts = useMemo(() => {
-    return contacts.length
-      ? contacts.filter(({ name }) => {
-          return name.toLowerCase().includes(filter.toLowerCase());
-        })
-      : [];
-  }, [contacts, filter]);
+  // const filteredContacts = useMemo(() => {
+  //   return contacts.length
+  //     ? contacts.filter(({ name }) => {
+  //         return name.toLowerCase().includes(filter.toLowerCase());
+  //       })
+  //     : [];
+  // }, [contacts, filter]);
 
   return (
     <div className={s.container}>
       <h1 className={s.title}>Phonebook</h1>
       <div className={s.form}>
-        <ContactForm onSubmit={onAddContact} />
+        <ContactForm />
       </div>
       <div className={s.contacts}>
         <h2 className={s.title}>Contacts</h2>
-        <Filter onChange={handleFilter} value={filter} />
-        <ContactList contacts={filteredContacts} handleDelete={handleDelete} />
+        <Filter />
+        <ContactList />
       </div>
     </div>
   );
