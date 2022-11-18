@@ -1,0 +1,10 @@
+.list {
+  padding-left: 20px;
+  font-size: large;
+  text-align: left;
+}
+
+.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}

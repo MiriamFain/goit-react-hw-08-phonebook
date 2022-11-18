@@ -1,34 +1,42 @@
 import s from './ContactList.module.css';
 import ContactItem from 'components/ContactItem/ContactItem';
-
-import { useMemo } from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { deleteContact } from '../../store/actions/contactActions';
+import classNames from 'classnames';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Loader } from 'components/Loader/Loader';
+import { selectFilteredContacts, selectIsLoading } from 'store/selectors';
+import {
+  getContactsThunk,
+  deleteContactThunk,
+} from 'store/contacts/thunk.contacts';
 
 const ContactList = () => {
-  const contacts = useSelector(state => state.contacts, shallowEqual);
-  const filter = useSelector(state => state.filter, shallowEqual);
+  const filteredContacts = useSelector(selectFilteredContacts);
+  const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
 
-  const filteredContacts = useMemo(() => {
-    return contacts.length
-      ? contacts.filter(({ name }) => {
-          return name.toLowerCase().includes(filter.toLowerCase());
-        })
-      : [];
-  }, [contacts, filter]);
+  useEffect(() => {
+    dispatch(getContactsThunk());
+  }, [dispatch]);
 
-  const elements = filteredContacts.map(({ id, name, number }) => (
+  const elements = filteredContacts.map(({ id, name, phone }) => (
     <ContactItem
       key={id}
       id={id}
       name={name}
-      number={number}
-      handleDelete={() => dispatch(deleteContact(id))}
+      phone={phone}
+      handleDelete={() => dispatch(deleteContactThunk(id))}
     />
   ));
 
-  return <ul className={s.list}>{elements}</ul>;
+  return (
+    <>
+      {isLoading && <Loader />}
+      <ul className={classNames(s.list, { [s.disabled]: isLoading })}>
+        {elements}
+      </ul>
+    </>
+  );
 };
 
 export default ContactList;
