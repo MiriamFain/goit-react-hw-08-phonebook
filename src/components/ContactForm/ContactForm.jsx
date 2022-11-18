@@ -1,46 +1,43 @@
 import React, { useState } from 'react';
 import s from './ContactForm.module.css';
-
-import { nanoid } from 'nanoid';
-
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { addContact } from '../../store/actions/contactActions';
+import { addContactThunk } from 'store/contacts/thunk.contacts';
+import { selectAllContacts } from 'store/selectors';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
-  const contacts = useSelector(state => state.contacts, shallowEqual);
+  const contacts = useSelector(selectAllContacts);
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    const newContact = { id: nanoid(), name, number };
+    const newContact = { name, phone };
     if (contacts.some(({ name }) => name === newContact.name)) {
       alert(`${newContact.name} is already in contacts!`);
       return;
     }
-    dispatch(addContact(newContact));
+    dispatch(addContactThunk(newContact));
     formReset();
   };
 
   const formReset = () => {
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   const handleChange = e => {
-    const prop = e.currentTarget.name;
-    switch (prop) {
+    switch (e.currentTarget.name) {
       case 'name':
         setName(e.currentTarget.value);
         break;
       case 'number':
-        setNumber(e.currentTarget.value);
+        setPhone(e.currentTarget.value);
         break;
       default:
-        throw new Error('Error');
+        console.log(e.currentTarget.name + ' is not a valid value');
     }
   };
 
@@ -68,7 +65,7 @@ const ContactForm = () => {
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          value={number}
+          value={phone}
           onChange={handleChange}
           required
         />
