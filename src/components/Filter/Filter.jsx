@@ -1,13 +1,12 @@
-import React from 'react';
 import s from './Filter.module.css';
-
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import changeFilter from '../../store/actions/filterActions';
+import { selectFilter } from 'store/selectors';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilterAction } from 'store/filter/slice.filter';
 
 import { BsSearch } from 'react-icons/bs';
 
 const Filter = () => {
-  const filter = useSelector(state => state.filter, shallowEqual);
+  const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
   return (
     <div className={s.filter}>
@@ -18,7 +17,7 @@ const Filter = () => {
           value={filter}
           name="filter"
           type="text"
-          onChange={e => dispatch(changeFilter(e.currentTarget.value))}
+          onChange={e => dispatch(setFilterAction(e.currentTarget.value))}
           placeholder="Find contact by name"
         />
       </label>
