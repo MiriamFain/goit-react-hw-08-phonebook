@@ -3,24 +3,25 @@ import { selectFilter } from 'store/selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { setFilterAction } from 'store/filter/slice.filter';
 
-import { BsSearch } from 'react-icons/bs';
+import { Input, Space } from 'antd';
+const { Search } = Input;
 
 const Filter = () => {
   const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
   return (
     <div className={s.filter}>
-      <label className={s.label}>
-        <BsSearch className={s.icon} /> Search
-        <input
+      <Space direction="vertical">
+        <Search
+          placeholder="Find contact by name"
           className={s.input}
           value={filter}
-          name="filter"
-          type="text"
-          onChange={e => dispatch(setFilterAction(e.currentTarget.value))}
-          placeholder="Find contact by name"
+          enterButton
+          size="large"
+          onPressEnter={e => dispatch(setFilterAction(e.currentTarget.value))}
+          onSearch={e => dispatch(setFilterAction(e.currentTarget.value))}
         />
-      </label>
+      </Space>
     </div>
   );
 };

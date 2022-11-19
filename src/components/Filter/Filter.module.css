@@ -5,19 +5,11 @@
   gap: 15px;
 }
 
-.label {
-  font-size: 20px;
-  padding-bottom: 10px;
-}
-
 .input {
-  margin-top: 10px;
-  width: 220px;
-  display: flex;
-  padding: 10px;
+  width: 300px;
 }
 
 .filter svg {
-  height: 0.8em;
-  width: 0.8em;
+  height: 1em;
+  width: 1em;
 }

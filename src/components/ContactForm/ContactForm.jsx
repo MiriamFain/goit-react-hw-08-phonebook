@@ -4,6 +4,9 @@ import { addContactThunk } from 'store/contacts/thunk.contacts';
 import { selectAllContacts } from 'store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { UserOutlined, PhoneOutlined } from '@ant-design/icons';
+import { Input, Button, Space } from 'antd';
+
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -43,36 +46,36 @@ const ContactForm = () => {
 
   return (
     <form className={s.form} onSubmit={handleSubmit}>
-      <label>
-        Name
-        <input
-          className={s.nameInput}
-          type="text"
-          name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          value={name}
-          onChange={handleChange}
-          required
-        />
-      </label>
+      <Input
+        placeholder="Enter name"
+        prefix={<UserOutlined />}
+        className={s.nameInput}
+        name="name"
+        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        value={name}
+        onChange={handleChange}
+        onPressEnter={handleChange}
+        required
+      />
 
-      <label>
-        Number
-        <input
-          className={s.telInput}
-          type="tel"
-          name="number"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          value={phone}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <button className={s.btn} type="submit">
-        Add contact
-      </button>
+      <Input
+        placeholder="Enter phone"
+        prefix={<PhoneOutlined />}
+        className={s.telInput}
+        name="number"
+        pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+        value={phone}
+        onChange={handleChange}
+        onPressEnter={handleChange}
+        required
+      />
+      <Space direction="vertical">
+        <Button className={s.btn} size="large" type="primary">
+          Add contact
+        </Button>
+      </Space>
     </form>
   );
 };

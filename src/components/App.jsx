@@ -12,19 +12,21 @@ function App() {
 
   return (
     <div className={s.container}>
-      <h1 className={s.title}>Phonebook</h1>
+      <h1 className={s.title}>
+        Phone<span style={{ color: 'blue' }}>Book</span>
+      </h1>
       <div className={s.form}>
         <ContactForm />
       </div>
-      {error ? (
+      {/* {error ? (
         <p>Oops, something went wrong, try again later, please!</p>
-      ) : (
-        <div className={s.contacts}>
-          <h2 className={s.title}>Contacts</h2>
-          <Filter />
-          <ContactList />
-        </div>
-      )}
+      ) : ( */}
+      <div className={s.contacts}>
+        <h2 className={s.subtitle}>Contacts</h2>
+        <Filter />
+        <ContactList />
+      </div>
+      {/* )} */}
     </div>
   );
 }

@@ -1,12 +1,10 @@
-import { MagnifyingGlass } from 'react-loader-spinner';
 import s from './Loader.module.css';
+import { Space, Spin } from 'antd';
+
 export const Loader = () => {
   return (
-    <MagnifyingGlass
-      wrapperClass={s.loader}
-      glassColor="#c0efff"
-      color="#000"
-      width="250"
-    />
+    <Space size="middle">
+      <Spin size="large" className={s.loader} />
+    </Space>
   );
 };
