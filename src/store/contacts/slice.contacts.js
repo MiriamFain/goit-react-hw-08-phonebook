@@ -19,22 +19,23 @@ const contactsSlice = createSlice({
   initialState: contactsInitialState,
   extraReducers: {
     [getContactsThunk.pending]: handlePending,
-    [getContactsThunk.fulfilled]: (state, { payload }) => {
+    [getContactsThunk.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.items.push(payload);
+      state.items = action.payload;
     },
     [getContactsThunk.rejected]: handleRejected,
 
     [addContactThunk.pending]: handlePending,
     [addContactThunk.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.items = state.items.filter(el => el.id !== payload);
+      state.items.push(payload);
     },
     [addContactThunk.rejected]: handleRejected,
 
     [deleteContactThunk.pending]: handlePending,
-    [deleteContactThunk.fulfilled]: state => {
+    [deleteContactThunk.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
+      state.items = state.items.filter(el => el.id !== payload);
     },
     [deleteContactThunk.rejected]: handleRejected,
   },
