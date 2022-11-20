@@ -1,5 +1,4 @@
 import s from './Authorization.module.css';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -16,7 +15,6 @@ import { Button, Form, Input } from 'antd';
 import { toast } from 'react-toastify';
 
 const Authorization = ({ isLogin, isRegister }) => {
-  const [passwordVisible, setPasswordVisible] = React.useState(false);
   const initialUserState = isLogin
     ? { email: '', password: '' }
     : { username: '', email: '', password: '' };
