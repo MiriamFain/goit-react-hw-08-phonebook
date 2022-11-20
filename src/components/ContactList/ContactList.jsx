@@ -4,7 +4,11 @@ import classNames from 'classnames';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Loader } from 'components/Loader/Loader';
-import { selectFilteredContacts, selectIsLoading } from 'store/selectors';
+import {
+  selectFilteredContacts,
+  selectIsLoading,
+  selectUser,
+} from 'store/selectors';
 import {
   getContactsThunk,
   deleteContactThunk,
@@ -13,11 +17,14 @@ import {
 const ContactList = () => {
   const filteredContacts = useSelector(selectFilteredContacts);
   const isLoading = useSelector(selectIsLoading);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getContactsThunk());
-  }, [dispatch]);
+    if (user) {
+      dispatch(getContactsThunk());
+    }
+  }, [dispatch, user]);
 
   const elements = filteredContacts.map(({ id, name, phone }) => (
     <ContactItem
