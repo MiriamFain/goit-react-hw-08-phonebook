@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import s from './SharedLayout.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUserThunk } from 'store/auth/thunk.auth';
-// import s from './user-menu.module.css';
+import { FloatButton } from 'antd';
 import { BiExit } from 'react-icons/bi';
 import { selectUser } from 'store/selectors';
 import { Link } from 'react-router-dom';
@@ -24,13 +24,19 @@ const SharedLayout = () => {
     <>
       <header className={s.bar}>
         <Link to="/" className={s.logo}>
-          'Phonebook'
+          <h3 className={s.title} style={{ color: '#000' }}>
+            Phone<span style={{ color: '#1677ff' }}>Book</span>
+          </h3>
         </Link>
         <p className={s.user}>
-          Welcome <span className={s.name}> {userName}</span>
+          Welcome,
+          <span className={s.name} style={{ color: '#1677ff' }}>
+            {' '}
+            {userName}
+          </span>
         </p>
         <button type="button" onClick={handleExit} className={s.exit}>
-          <BiExit className={s.exitIcon} /> Exit
+          <BiExit className={s.exitIcon} />
         </button>
       </header>
       <div className={s.layout}>

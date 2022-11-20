@@ -50,7 +50,7 @@ const Authorization = ({ isLogin, isRegister }) => {
   };
 
   return (
-    <div className={s.wrapper}>
+    <div className={s.container}>
       <Form
         name="normal_login"
         initialValues={{

@@ -1,0 +1,31 @@
+.bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 70px;
+}
+
+.logo {
+  text-decoration: none;
+}
+
+.exit {
+  background-color: #1677ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.exit:hover {
+  background-color: #4096ff;
+}
+
+.exitIcon {
+  color: white;
+}
