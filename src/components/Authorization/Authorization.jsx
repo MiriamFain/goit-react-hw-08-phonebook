@@ -1,17 +1,22 @@
 import s from './Authorization.module.css';
-
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUserThunk, registerUserThunk } from 'store/auth/thunk.auth';
 
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  LockOutlined,
+  UserOutlined,
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+} from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 
 import { toast } from 'react-toastify';
-// import { useMediaQuery } from 'react-responsive';
 
 const Authorization = ({ isLogin, isRegister }) => {
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
   const initialUserState = isLogin
     ? { email: '', password: '' }
     : { username: '', email: '', password: '' };
@@ -37,7 +42,6 @@ const Authorization = ({ isLogin, isRegister }) => {
   };
 
   const handleFormSubmit = () => {
-    // e.preventDefault();
     if (isLogin) {
       dispatch(loginUserThunk(user))
         .unwrap()
@@ -108,7 +112,7 @@ const Authorization = ({ isLogin, isRegister }) => {
             },
           ]}
         >
-          <Input
+          <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
             className={s.input}
             onChange={e => handleInputChange(e)}
@@ -118,6 +122,9 @@ const Authorization = ({ isLogin, isRegister }) => {
             placeholder={content.passwordPlaceholder}
             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}"
             title="Must contain at least one number and one uppercase and lowercase letter, and at least 5 or more characters"
+            iconRender={visible =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
           />
         </Form.Item>
         <Form.Item>

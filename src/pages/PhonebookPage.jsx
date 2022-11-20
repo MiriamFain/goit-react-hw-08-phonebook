@@ -7,7 +7,11 @@ import ContactForm from 'components/ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import Filter from 'components/Filter/Filter';
 
-import { selectError } from 'store/selectors';
+import {
+  selectError,
+  selectAllContacts,
+  selectIsLoading,
+} from 'store/selectors';
 
 import { getContactsThunk } from 'store/contacts/thunk.contacts';
 
@@ -18,6 +22,9 @@ const PhonebookPage = () => {
   }, [dispatch]);
 
   const error = useSelector(selectError);
+  const contacts = useSelector(selectAllContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const isEmpty = !isLoading && !contacts.length;
 
   return (
     <div className={s.container}>
@@ -31,9 +38,15 @@ const PhonebookPage = () => {
         <p>Oops, something went wrong, try again later, please!</p>
       ) : (
         <div className={s.contacts}>
-          <h2 className={s.subtitle}>Contacts</h2>
-          <Filter />
-          <ContactList />
+          {isEmpty ? (
+            <p>Add your first contact!</p>
+          ) : (
+            <>
+              <h2 className={s.subtitle}>Contacts</h2>
+              <Filter />
+              <ContactList />
+            </>
+          )}
         </div>
       )}
     </div>
