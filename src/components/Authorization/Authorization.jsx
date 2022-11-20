@@ -17,7 +17,6 @@ const Authorization = ({ isLogin, isRegister }) => {
     : { username: '', email: '', password: '' };
 
   const [user, setUser] = useState(initialUserState);
-  const [passwordBtn, setPasswordBtn] = useState('password');
   const dispatch = useDispatch();
   const content = isLogin
     ? {
@@ -36,6 +35,7 @@ const Authorization = ({ isLogin, isRegister }) => {
       return { ...prevState, [e.target.name]: e.target.value };
     });
   };
+
   const handleFormSubmit = () => {
     // e.preventDefault();
     if (isLogin) {
@@ -113,7 +113,7 @@ const Authorization = ({ isLogin, isRegister }) => {
             className={s.input}
             onChange={e => handleInputChange(e)}
             value={user.password}
-            type={passwordBtn}
+            type="password"
             name="password"
             placeholder={content.passwordPlaceholder}
             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}"
