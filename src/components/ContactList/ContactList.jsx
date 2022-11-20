@@ -26,12 +26,12 @@ const ContactList = () => {
     }
   }, [dispatch, user]);
 
-  const elements = filteredContacts.map(({ id, name, phone }) => (
+  const elements = filteredContacts.map(({ id, name, number }) => (
     <ContactItem
       key={id}
       id={id}
       name={name}
-      phone={phone}
+      number={number}
       handleDelete={() => dispatch(deleteContactThunk(id))}
     />
   ));
