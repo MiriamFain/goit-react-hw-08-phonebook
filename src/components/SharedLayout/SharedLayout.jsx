@@ -3,20 +3,17 @@ import { Suspense } from 'react';
 import s from './SharedLayout.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUserThunk } from 'store/auth/thunk.auth';
-import { FloatButton } from 'antd';
+
 import { BiExit } from 'react-icons/bi';
 import { selectUser } from 'store/selectors';
 import { Link } from 'react-router-dom';
-// import { useMediaQuery } from 'react-responsive';
 
 const SharedLayout = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userName =
     user && user.name[0].toUpperCase() + user.name.slice(1).toLowerCase();
-  //   const isMobile = useMediaQuery({
-  //     query: '(max-width: 600px)',
-  //   });
+
   const handleExit = () => {
     dispatch(logoutUserThunk());
   };
