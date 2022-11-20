@@ -6,7 +6,7 @@ import { selectAllContacts } from 'store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { UserOutlined, PhoneOutlined } from '@ant-design/icons';
-import { Input, Button, Space } from 'antd';
+import { Input, Button, Space, Form } from 'antd';
 
 const ContactForm = () => {
   const [contact, setContact] = useState({ name: '', number: '' });
@@ -14,8 +14,8 @@ const ContactForm = () => {
   const contacts = useSelector(selectAllContacts);
   const dispatch = useDispatch();
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = () => {
+    // e.preventDefault();
     const newContact = contact;
 
     if (contacts.some(({ name }) => name === newContact.name)) {
@@ -39,39 +39,50 @@ const ContactForm = () => {
   };
 
   return (
-    <form className={s.form} onSubmit={handleSubmit}>
-      <Input
-        placeholder="Enter name"
-        prefix={<UserOutlined />}
-        className={s.nameInput}
-        name="name"
-        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        value={contact.name}
-        onChange={handleChange}
-        onPressEnter={handleChange}
-        required
-      />
+    <Form className={s.form} onFinish={handleSubmit}>
+      <Form.Item>
+        <Input
+          placeholder="Enter name"
+          prefix={<UserOutlined />}
+          className={s.nameInput}
+          name="name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          value={contact.name}
+          onChange={handleChange}
+          onPressEnter={handleChange}
+          required
+        />
+      </Form.Item>
 
-      <Input
-        placeholder="Enter phone"
-        prefix={<PhoneOutlined />}
-        className={s.telInput}
-        name="number"
-        type="tel"
-        pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        value={contact.number}
-        onChange={handleChange}
-        onPressEnter={handleChange}
-        required
-      />
-      <Space direction="vertical">
-        <Button className={s.btn} size="large" type="primary">
-          Add contact
-        </Button>
-      </Space>
-    </form>
+      <Form.Item>
+        <Input
+          placeholder="Enter phone"
+          prefix={<PhoneOutlined />}
+          className={s.telInput}
+          name="number"
+          type="tel"
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          value={contact.number}
+          onChange={handleChange}
+          onPressEnter={handleChange}
+          required
+        />
+      </Form.Item>
+      <Form.Item>
+        <Space direction="vertical">
+          <Button
+            className={s.btn}
+            size="large"
+            type="primary"
+            htmlType="submit"
+          >
+            Add contact
+          </Button>
+        </Space>
+      </Form.Item>
+    </Form>
   );
 };
 
